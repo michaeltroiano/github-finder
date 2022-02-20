@@ -8,7 +8,7 @@ function Alert() {
     return alert !== null && (
         <p className="flex items-start mb-4 space-x-2">
             {alert.type === 'error' && (
-                    <img src={error} height={20} width={20} className="flex my-auto"/>
+                    <img src={error} height={20} width={20} className="flex my-auto" alt='warning'/>
             )}
             <p className="flex-1 text-base font-semibold leading-7 text-white">
                 <strong>
