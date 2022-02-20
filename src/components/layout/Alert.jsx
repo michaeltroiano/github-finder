@@ -17,12 +17,6 @@ function Alert() {
             </p>
         </p>
     )
-
-    return (
-        <div>
-            ALERT
-        </div>
-    )
 }
 
 export default Alert
