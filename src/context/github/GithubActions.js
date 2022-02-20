@@ -18,9 +18,19 @@ export const searchUsers = async (text) => {
         q: text
     })
 
-    const response = await github.get(`/search/users?${params}`)
+    // const response = await github.get(`/search/users?${params}`).catch(err => {
+    //     console.log(err)
+    // })
 
-    return response.data.items
+    const response = await fetch(`${GITHUB_URL}/search/users?${params}`, {
+        Authorization: `token ${GITHUB_TOKEN}` 
+     })
+
+    const {items} = await response.json()
+
+    return items
+
+    // return response.data.items
 }
 
  // Get user and repos
@@ -28,12 +38,29 @@ export const searchUsers = async (text) => {
     const reposParams = new URLSearchParams({
         sort: "created",
         per_page: 10
-    }).toString()
+    })
 
-    const [user, repos] = await Promise.all([
-        github.get(`/users/${login}`),
-        github.get(`/users/${login}/repos?${reposParams}`)
-    ])
+    // const [user, repos] = await Promise.all([
+    //     github.get(`/users/${login}`),
+    //     github.get(`/users/${login}/repos?${reposParams}`)
+    // ])
 
-    return { user: user.data, repos: repos.data}
+    // return { user: user.data, repos: repos.data}
+
+    const response = await fetch(`${GITHUB_URL}/users/${login}`, {
+        Authorization: `token ${GITHUB_TOKEN}` 
+     })
+
+    const user = await response.json()
+    console.log(user)
+    
+
+    const reporesponse = await fetch(`${GITHUB_URL}/users/${login}/repos?${reposParams}`, {
+        Authorization: `token ${GITHUB_TOKEN}` 
+     })
+
+    const repos = await reporesponse.json()
+
+    return { user: user, repos: repos}
+
  }
